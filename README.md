@@ -9,53 +9,55 @@ Some useful Xamarin Android snippets
 
     The T parameter is the json response object.
 
-    await new Request<T>()
-    .SetHttpMethod(HttpMethod.[Post|Put|Get|Delete].Method) //Obligatory
-    .SetEndpoint("http://www.yourserver.com/profilepic/") //Obligatory
-    .SetJsonPayload(someJsonObject) //Optional if you're using Get or Delete, Obligatory if you're using Put or Post
-    .OnSuccess((serverResponse) => { 
-       //Optional action triggered when you have a succesful 200 response from the server
-      //serverResponse is of type T
-    })
-    .OnNoInternetConnection(() =>
-    {
-        // Optional action triggered when you try to make a request without internet connetion
-    })
-    .OnRequestStarted(() =>
-    {
-        // Optional action triggered always as soon as we start making the request i.e. very useful when
-        // We want to start an UI related action such as showing a ProgressBar or a Spinner.
-    })
-    .OnRequestCompleted(() =>
-    {
-        // Optional action triggered always when a request finishes, no matter if it finished successufully or
-        // It failed. It's useful for when you need to finish some UI related action such as hiding a ProgressBar or
-        // a Spinner.
-    })
-    .OnError((exception) =>
-    {
-        // Optional action triggered always when something went wrong it can be caused by a server-side error, for
-        // example a internal server error or for something in the callbacks, for example a NullPointerException.
-    })
-    .OnHttpError((httpErrorStatus) =>
-    {
-        // Optional action triggered when something when sending a request, for example, the server returned a internal
-        // server error, a bad request error, an unauthorize error, etc. The httpErrorStatus variable is the error code.
-    })
-    .OnBadRequest(() =>
-    {
-        // Optional action triggered when the server returned a bad request error.
-    })
-    .OnUnauthorize(() =>
-    {
-        // Optional action triggered when the server returned an unauthorize error.
-    })
-    .OnInternalServerError(() =>
-    {
-        // Optional action triggered when the server returned an internal server error.
-    })
-    //AND THERE'S A LOT MORE OF CALLBACKS THAT YOU CAN HOOK OF, CHECK THE REQUEST CLASS TO MORE INFO.
-    .Start();
+
+        await new Request<T>()
+        .SetHttpMethod(HttpMethod.[Post|Put|Get|Delete].Method) //Obligatory
+        .SetEndpoint("http://www.yourserver.com/profilepic/") //Obligatory
+        .SetJsonPayload(someJsonObject) //Optional if you're using Get or Delete, Obligatory if you're using Put or Post
+        .OnSuccess((serverResponse) => { 
+           //Optional action triggered when you have a succesful 200 response from the server
+          //serverResponse is of type T
+        })
+        .OnNoInternetConnection(() =>
+        {
+            // Optional action triggered when you try to make a request without internet connetion
+        })
+        .OnRequestStarted(() =>
+        {
+            // Optional action triggered always as soon as we start making the request i.e. very useful when
+            // We want to start an UI related action such as showing a ProgressBar or a Spinner.
+        })
+        .OnRequestCompleted(() =>
+        {
+            // Optional action triggered always when a request finishes, no matter if it finished successufully or
+            // It failed. It's useful for when you need to finish some UI related action such as hiding a ProgressBar or
+            // a Spinner.
+        })
+        .OnError((exception) =>
+        {
+            // Optional action triggered always when something went wrong it can be caused by a server-side error, for
+            // example a internal server error or for something in the callbacks, for example a NullPointerException.
+        })
+        .OnHttpError((httpErrorStatus) =>
+        {
+            // Optional action triggered when something when sending a request, for example, the server returned a internal
+            // server error, a bad request error, an unauthorize error, etc. The httpErrorStatus variable is the error code.
+        })
+        .OnBadRequest(() =>
+        {
+            // Optional action triggered when the server returned a bad request error.
+        })
+        .OnUnauthorize(() =>
+        {
+            // Optional action triggered when the server returned an unauthorize error.
+        })
+        .OnInternalServerError(() =>
+        {
+            // Optional action triggered when the server returned an internal server error.
+        })
+        //AND THERE'S A LOT MORE OF CALLBACKS THAT YOU CAN HOOK OF, CHECK THE REQUEST CLASS TO MORE INFO.
+        .Start();
+    
 
 - Examples:
 
@@ -150,11 +152,10 @@ Some useful Xamarin Android snippets
     
 - Architecture: The idea of this Http Client is having your app network layer split in two, the real Http Client and a Mock Http Cliend. For example let's continue with the /user webservice example. We have an interface were we have all the server side methods:
 
-
-    public interface IRestService
-    {
-      Request<List<User>> GetUsersDataAsync();
-    }
+        public interface IRestService
+        {
+          Request<List<User>> GetUsersDataAsync();
+        }
     
 Then we have two concrete implementations of this interface, the mock implementation:
 
